@@ -1,0 +1,96 @@
+
+# function for E(t)
+E_t <- function(n, Emax, t, r, O) {
+  numerator <- n * (Emax + 1) * O * (exp(t * (n * (Emax + 1) * r + O)) / (n * (Emax + 1))) - 1
+  denominator <- O * (exp(t * (n * (Emax + 1) * r + O)) / (n * (Emax + 1))) + n * (Emax + 1) * r
+  return(numerator / denominator)
+}
+
+#baseline parameters = means
+n_bs <- 6
+Emax_bs <- 1
+t_bs <- 1
+r_bs <- 1
+O_bs <- 1
+
+percent_change <- 50      # in %
+
+E_t_bs <- E_t(Emax = Emax_bs, n = n_bs, t = t_bs, r = r_bs, O = O_bs)
+
+#defining "lists" for loops
+parameters <- list(
+  n = n_bs,
+  Emax = Emax_bs,
+  t = t_bs,
+  r = r_bs,
+  O = O_bs
+)
+baseline_values <- c(n_bs, Emax_bs, t_bs, r_bs, O_bs)
+
+#loop for varying each parameter
+for(i in 1:length(parameters)) {
+  pm_values <- parameters[i] 
+  pm_id <- names(parameters[i])
+
+  if(pm_id == "n") {
+    E_t_nv <- E_t(n = n_bs * (1 + (percent_change / 100)), Emax = Emax_bs, t = t_bs, r = r_bs, O = O_bs)
+  } 
+  else if(pm_id == "Emax") {
+    E_t_ev <- E_t(n = n_bs, Emax = Emax_bs * (1 + (percent_change / 100)), t = t_bs, r = r_bs, O = O_bs)
+  } 
+  else if (pm_id == "r") {
+    E_t_rv <- E_t(n = n_bs, Emax = Emax_bs, t = t_bs, r = r_bs * (1 + (percent_change / 100)), O = O_bs)
+  }  
+  else if (pm_id == "O") {
+    E_t_Ov <- E_t(n = n_bs, Emax = Emax_bs, t = t_bs, r = r_bs, O = O_bs * (1 + (percent_change / 100)))
+    }
+}
+
+print(paste("Baseline E(t):", E_t_bs, ".Values of E(t) for parameters varied (increase) by", percent_change, "% for n, Emax, r, O:", E_t_nv, E_t_ev, E_t_rv, E_t_Ov))
+
+#loop for percentage calculation
+for(i in 1:length(parameters)) {
+  pm_values <- parameters[i] 
+  pm_id <- names(parameters[i])
+
+  if(pm_id == "n") {
+    E_t_vn_pc <- ((E_t_nv - E_t_bs) / E_t_bs) * 100
+  } 
+  else if(pm_id == "Emax") {
+    E_t_ev_pc <- ((E_t_ev - E_t_bs) / E_t_bs) * 100
+  } 
+  else if (pm_id == "r") {
+    E_t_rv_pc <- ((E_t_rv - E_t_bs) / E_t_bs) * 100
+  }  
+  else if (pm_id == "O") {
+    E_t_Ov_pc <- ((E_t_Ov - E_t_bs) / E_t_bs) * 100
+    }
+  
+}
+
+print(paste("Percentage change of E(t) for n, Emax, r, O who were increased by", percent_change, "%:", E_t_vn_pc, E_t_ev_pc, E_t_rv_pc, E_t_Ov_pc))
+
+
+#note:          maybe verify that the code spits out correct values
+
+# plotting 
+library(ggplot2)
+library(dplyr)
+
+pl_data <- data.frame( # data frame for the plot.
+  x_pm_names <- c("n", "Emax", "r", "O"),
+  y_pm_percentage <- c(E_t_vn_pc, E_t_ev_pc, E_t_rv_pc, E_t_Ov_pc)
+)
+
+plot <- ggplot(pl_data,
+aes(x= reorder(x_pm_names, abs(percent_change)), y = y_pm_percentage, fill = x_pm_names),
+geom_bar(stat= "identity", width = 0.5, color = "red") +
+coord.flip() +
+labs(
+  title = "OAT analysis",
+  y = "Percentage change in E(t)",
+  x = "Parameters"
+)
+)
+
+ggsave(plot, filename = "OAT_analysis.png", width = 8, height = 6)
