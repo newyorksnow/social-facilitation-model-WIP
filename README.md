@@ -1,2 +1,7 @@
 # social-facilitation-model-WIP
-real ones know
+
+DE:
+Mein Projekt befasst sich mit der sozialen Erleichterung des Essens, dem Phänomen, dass ein Individuum in einem sozialen Kontext mehr isst, als es allein tun würde. Für mein Projekt habe ich ein mathematisches Modell erstellt, das das Essverhalten einer Person in Gegenwart anderer Esser beschreibt. Das Ziel meines Projekts besteht darin, mithilfe dieses Modells zu beurteilen, ob die Anzahl der Menschen, die gemeinsam essen, den größten Einfluss auf die Nahrungsaufnahme einer Person hat. Um diese Frage zu beantworten, plane ich, eine Sensitivitätsanalyse durchzuführen, um herauszufinden, welcher Parameter meiner Gleichung den größten Einfluss auf das Ergebnis hat und dieses anschliessend zu validieren.
+
+EN:
+My project is about the social facilitation of eating, which is defined as the phenomenon whereby an individual eats more in a social setting than they would  alone. For my project I adapted a mathematical model that describes eating behavior to consider the amount of co-eaters. The goal of my project is to use this model to address a scientific question: whether the number of co-eaters would have the biggest effect on the food intake of an individual. In order to answer this, I plan to validate my model and conduct a sensitivity analysis to see which parameter in my equation has the biggest influence on the output. I'll try to write a more concise description if this github gets more members.
