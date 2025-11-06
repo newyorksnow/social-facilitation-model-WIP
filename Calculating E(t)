@@ -1,0 +1,26 @@
+# calculating E(t) with dataset (that doesn't exist yet!)
+# R = Emax, a = O
+
+# equation for E(t)
+E_t <- function(n, R, a, r, t) {
+
+  numerator <- n * (R + 1) * a * (exp((t * (n * (R + 1) * r + a)) / (n * (R + 1))) - 1)
+  denominator <- a * (exp((t * (n * (R + 1) * r + a)) / (n * (R + 1))) + n * (R + 1) * r)
+  result <- numerator / denominator
+  
+  return(result)
+}
+
+# data = problem
+n <- 3    
+R <- 6.037118    # see "least squares estimate R and a"
+a <- 1.926070    
+r <- 13  
+t <- 13    
+# t=r because 21.1g are measured at the end of the eating session
+#video analyse daten berechnen
+
+
+E_value <- E_t(n, R, a, r, t)
+
+print(E_value)
